@@ -1,5 +1,6 @@
 // bug when it returns zero
 function organizeArray(phrase) {
+	phrase = phrase.toLowerCase();
 	var words = phrase.split(" ");
 	var linkarray = [];
 	var textarray = [];
@@ -9,12 +10,6 @@ function organizeArray(phrase) {
 		var temptext = [];
 		$('a').each(function() {
 			if ($(this).text().indexOf(words[i]) != -1) {
-<<<<<<< HEAD
-				alert("hi andrew");
-=======
-				alert("hi avi");
->>>>>>> 62228268622643e11a4eef007c4be449994f88de
-				console.log($(this).text());
 				templink.push($(this).attr("href"));
 				temptext.push($(this).text());
 			}
@@ -35,9 +30,19 @@ function organizeArray(phrase) {
 
 	var twoArrays = [shortesttext, shortestlink];
 
-	window.location.href = twoArrays[1][0];
+	var simArray = []
+	for (var i = 0; i < shortesttext.length; i++) {
+		simArray.push(findSimilarity(shortesttext[i], phrase));
+	}
 
-	return twoArrays[1][0];
+	var index = simArray.indexOf(Math.max.apply(Math, simArray));
+
+
+	console.log(linkarray[index]);
+
+	// window.location.href = shortestlink[index];
+
+	return shortestlink[index];
 }
 function longestCommonSubstring(string1, string2){
 	// init max value
@@ -73,22 +78,49 @@ function longestCommonSubstring(string1, string2){
 	}
 	return longestCommonSubstring;
 }
-
+/* find number of duplicates and number of common substrings
+	two phrases: Tesla is the best car, 200,000 Tesla cars ready
+*/
 function findSimilarity(phrase1, phrase2) {
-	var sim = 0;
+	var sim = 0.0;
+	phrase1 = phrase1.toLowerCase();
+	phrase2 = phrase2.toLowerCase();
 	var words1 = phrase1.split(" ");
 	var words2 = phrase2.split(" ");
-	var intersection = intersection_safe(words1, words2);
+	var intersection = intersect(words1, words2);
 	sim += intersection.length;
-
-
-
+	Array.prototype.diff = function(a) {
+    return this.filter(function(i) {return a.indexOf(i) < 0;});
+	};
+	var diff1 = words1.diff(intersection);
+	var diff2 = words2.diff(intersection);
+	sim += findSubstringCommonality(diff1, diff2);
+	return sim;
 }
 
+function findSubstringCommonality(stringarray1, stringarray2) {
+	var substringSim = 0.0;
+	for (var i = 0; i < stringarray1.length; i++) {
+		for (var j = 0; j < stringarray2.length; j++) {
+			var maxlength = Math.max(stringarray1[i].length, stringarray2[j].length);
+			var longestComSub = parseFloat(longestCommonSubstring(stringarray1[i], stringarray2[j]));
+			if (longestComSub >= 3)
+				substringSim += longestComSub/maxlength;
+		}
+	}
+	return substringSim;
+}
+function intersect(a, b) {
+    var t;
+    if (b.length > a.length) t = b, b = a, a = t; // indexOf to loop over shorter
+    return a.filter(function (e) {
+        if (b.indexOf(e) !== -1) return true;
+    });
+}
 function intersect_safe(a, b)
 {
   var ai=0, bi=0;
-  var result = [];
+  var result   = [];
 
   while( ai < a.length && bi < b.length )
   {
