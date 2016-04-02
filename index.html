@@ -1,4 +1,15 @@
-chrome.browserAction.onClicked.addListener(function() {
+ <html>
+  <head>
+    <link rel="stylesheet" href="microphone/microphone.min.css">
+  </head>
+  <body style="text-align: center;">
+    <center><div id="microphone"></div></center>
+    <pre id="result"></pre>
+    <div id="info"></div>
+    <div id="error"></div>
+    <script src="microphone/microphone.min.js"></script>
+
+    <script>
       var mic = new Wit.Microphone(document.getElementById("microphone"));
       var info = function (msg) {
         document.getElementById("info").innerHTML = msg;
@@ -52,5 +63,6 @@ chrome.browserAction.onClicked.addListener(function() {
         }
         return k + "=" + v + "\n";
       }
-            $("#button").click();
-});
+    </script>
+  </body>
+  </html>
