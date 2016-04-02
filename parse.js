@@ -1,6 +1,5 @@
-
-
-function organizeArray(phrase) {	
+// bug when it returns zero
+function organizeArray(phrase) {
 	var words = phrase.split(" ");
 	var linkarray = [];
 	var textarray = [];
@@ -10,21 +9,31 @@ function organizeArray(phrase) {
 		var temptext = [];
 		$('a').each(function() {
 			if ($(this).text().indexOf(words[i]) != -1) {
+				console.log(words[i]);
+				console.log($(this).text());
 				templink.push($(this).attr("href"));
 				temptext.push($(this).text());
 			}
-		})	
+		})
 		linkarray.push(templink);
 		textarray.push(temptext);
 	}
+
+	for (var i = 0; i < linkarray.length; i++) {
+		if (linkarray[i].length == 0) {
+			linkarray.splice(i, 1);
+			textarray.splice(i, 1);
+		}
+	}
+
 	var shortestlink = linkarray.reduce(function(p,c) {return p.length>c.length?c:p;},{length:Infinity});
 	var shortesttext = textarray.reduce(function(p,c) {return p.length>c.length?c:p;},{length:Infinity});
 
 	var twoArrays = [shortesttext, shortestlink];
 
-	console.log(twoArrays);
+	window.location.href = twoArrays[1][0];
 
-	return twoArrays;
+	return twoArrays[1][0];
 }
 function longestCommonSubstring(string1, string2){
 	// init max value
