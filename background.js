@@ -1,56 +1,88 @@
 chrome.browserAction.onClicked.addListener(function() {
-      var mic = new Wit.Microphone(document.getElementById("microphone"));
-      var info = function (msg) {
-        document.getElementById("info").innerHTML = msg;
-      };
-      var error = function (msg) {
-        document.getElementById("error").innerHTML = msg;
-      };
-      mic.onready = function () {
-        info("Microphone is ready to record");
-      };
-      mic.onaudiostart = function () {
-        info("Recording started");
-        error("");
-      };
-      mic.onaudioend = function () {
-        info("Recording stopped, processing started");
-      };
-      mic.onresult = function (intent, entities) {
-        var r = kv("intent", intent);
+  console.log("hello world");
+  // permissions
+  navigator.getUserMedia = (navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia);
+  if (navigator.getUserMedia) {
+    navigator.getUserMedia(
+       {
+          video:false,
+          audio:true
+       },
+       function(stream) { /* do something */ },
+       function(error) { /* do something */ }
+    );
+  } else {
+    alert('Sorry, the browser you are using doesn\'t support getUserMedia');
+  }
+  
+  var audio = new Audio('ding.mp3');
+  var recognition = new webkitSpeechRecognition();
+  if ('webkitSpeechRecognition' in window) {
+    recognition.continuous = true;
+    recognition.interimResults = true;
+    recognition.lang = "en";
+    var final_transcript = '';
+    var interim_transcript = '';
+    recognition.start();
 
-        for (var k in entities) {
-          var e = entities[k];
-          if (!(e instanceof Array)) {
-            r += kv(k, e.value);
-          } else {
-            for (var i = 0; i < e.length; i++) {
-              r += kv(k, e[i].value);
-            }
+    recognition.onstart = function() {
+      console.log('Starting Session!');
+    };
+
+    recognition.onaudiostart = function(event) {
+      console.log("First Audio Heard!");
+      // start_timestamp = event.timeStamp;
+    };
+
+    recognition.onsoundstart = function() {
+      console.log("Sound start");
+    };
+
+    recognition.onsoundend = function() {
+      console.log("Sound end");
+    };
+
+    recognition.onresult = function (event) {
+      var final = "";
+      var interim = "";
+      for (var i = 0; i < event.results.length; ++i) {
+        if (event.results[i].isFinal) {
+          console.log(event.results[i][0].transcript);
+
+          if(event.results[i][0].transcript == "Lucy"){
+            console.log("Lucy Was Called!");
+            audio.play();
           }
+
+          final += event.results[i][0].transcript;
+        } else {
+          interim += event.results[i][0].transcript;
         }
-
-        document.getElementById("result").innerHTML = r;
-      };
-      mic.onerror = function (err) {
-        error("Error: " + err);
-      };
-      mic.onconnecting = function () {
-        info("Microphone is connecting");
-      };
-      mic.ondisconnected = function () {
-        info("Microphone is not connected");
-      };
-
-      mic.connect("CHT7H4FHSML6TJMN54GME5ACTTCSNYYJ");
-      // mic.start();
-      // mic.stop();
-
-      function kv (k, v) {
-        if (toString.call(v) !== "[object String]") {
-          v = JSON.stringify(v);
-        }
-        return k + "=" + v + "\n";
       }
-            $("#button").click();
+    };
+
+    recognition.onend = function() {
+      console.log('Ending Session!');
+      console.log(final_transcript);
+      recognition.start();
+    };
+
+    recognition.onerror = function(event) {
+      if (event.error == 'no-speech') {
+        console.log('info_no_speech');
+      }
+      if (event.error == 'audio-capture') {
+        console.log('info_no_microphone');
+      }
+      if (event.error == 'not-allowed') {
+        console.log("errr...");
+
+        if (event.timeStamp - start_timestamp < 100) {
+          console.log('info_blocked');
+        } else {
+          console.log('info_denied');
+        }
+      }
+    };
+  }
 });
