@@ -9,7 +9,11 @@ function organizeArray(phrase) {
 		var temptext = [];
 		$('a').each(function() {
 			if ($(this).text().indexOf(words[i]) != -1) {
+<<<<<<< HEAD
 				alert("hi andrew");
+=======
+				alert("hi avi");
+>>>>>>> 62228268622643e11a4eef007c4be449994f88de
 				console.log($(this).text());
 				templink.push($(this).attr("href"));
 				temptext.push($(this).text());
@@ -76,7 +80,7 @@ function findSimilarity(phrase1, phrase2) {
 	var words2 = phrase2.split(" ");
 	var intersection = intersection_safe(words1, words2);
 	sim += intersection.length;
-	
+
 
 
 }
