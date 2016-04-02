@@ -62,5 +62,32 @@ function longestCommonSubstring(string1, string2){
 }
 
 function findSimilarity(phrase1, phrase2) {
+	var sim = 0;
+	var words1 = phrase1.split(" ");
+	var words2 = phrase2.split(" ");
+	var intersection = intersection_safe(words1, words2);
+	sim += intersection.length;
+	
 
+
+}
+
+function intersect_safe(a, b)
+{
+  var ai=0, bi=0;
+  var result = [];
+
+  while( ai < a.length && bi < b.length )
+  {
+     if      (a[ai] < b[bi] ){ ai++; }
+     else if (a[ai] > b[bi] ){ bi++; }
+     else /* they're equal */
+     {
+       result.push(a[ai]);
+       ai++;
+       bi++;
+     }
+  }
+
+  return result;
 }
