@@ -16,6 +16,8 @@
     "default_icon": "icon.png"
     },
 
+  "options_page": "initialize.html",
+
   "content_scripts": [
   {
     "matches": ["http://*/*", "https://*/*"],

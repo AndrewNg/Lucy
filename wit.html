@@ -1,0 +1,86 @@
+ <html>
+  <head>
+    <link rel="stylesheet" href="microphone/microphone.min.css">
+  </head>
+  <body style="text-align: center;">
+    <center><div id="microphone"></div></center>
+    <pre id="result"></pre>
+    <div id="info"></div>
+    <div id="error"></div>
+    <script src="microphone/microphone.min.js"></script>
+    <script src="jquery-1.9.1.min.js"></script>
+
+    <script>
+      var mic = new Wit.Microphone(document.getElementById("microphone"));
+      var info = function (msg) {
+        document.getElementById("info").innerHTML = msg;
+      };
+      var error = function (msg) {
+        document.getElementById("error").innerHTML = msg;
+      };
+      mic.onready = function () {
+        info("Microphone is ready to record");
+      };
+      mic.onaudiostart = function () {
+        info("Recording started");
+        error("");
+      };
+      mic.onaudioend = function () {
+        info("Recording stopped, processing started");
+      };
+      mic.onresult = function (intent, entities) {
+        var r = kv("intent", intent);
+
+        for (var k in entities) {
+          var e = entities[k];
+          if (!(e instanceof Array)) {
+            r += kv(k, e.value);
+          } else {
+            for (var i = 0; i < e.length; i++) {
+              r += kv(k, e[i].value);
+            }
+          }
+        }
+
+        document.getElementById("result").innerHTML = r;
+        if(intent == 'scroll_down'){
+          console.log("Scroll down");
+          var n = $(document).height();
+          $('html, body').animate({ scrollTop: n }, 50);
+        }
+
+        if(intent == "next_page"){
+          console.log("Go to the next page");
+          
+        }
+      };
+      mic.onerror = function (err) {
+        error("Error: " + err);
+      };
+      mic.onconnecting = function () {
+        info("Microphone is connecting");
+      };
+      mic.ondisconnected = function () {
+        info("Microphone is not connected");
+      };
+
+      mic.connect("CHT7H4FHSML6TJMN54GME5ACTTCSNYYJ");
+      // mic.start();
+      // mic.stop();
+
+      function kv (k, v) {
+        if (toString.call(v) !== "[object String]") {
+          v = JSON.stringify(v);
+        }
+        return k + "=" + v + "\n";
+      }
+    </script>
+
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+  </body>
+  </html>
