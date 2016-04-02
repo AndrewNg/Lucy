@@ -9,7 +9,7 @@ function organizeArray(phrase) {
 		var temptext = [];
 		$('a').each(function() {
 			if ($(this).text().indexOf(words[i]) != -1) {
-				console.log(words[i]);
+				alert("hi andrew");
 				console.log($(this).text());
 				templink.push($(this).attr("href"));
 				temptext.push($(this).text());
