@@ -9,7 +9,7 @@
 
   "background": {
     "background_page": ["background.html"],
-    "scripts": ["background.js"]
+    "scripts": ["jquery-1.9.1.min.js", "background.js"]
   },
 
   "browser_action": {

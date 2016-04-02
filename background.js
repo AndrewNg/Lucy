@@ -42,7 +42,6 @@ chrome.browserAction.onClicked.addListener(function() {
 
           if(lucyActivated){
             intent = getIntent(event.results[i][0].transcript);
-            console.log(intent);
             lucyActivated = false;
           }
 
@@ -86,6 +85,7 @@ chrome.browserAction.onClicked.addListener(function() {
   var baseUrl = "https://api.api.ai/v1/";
 
   function getIntent(query) {
+    console.log(query);
     $.ajax({
       type: "POST",
       url: baseUrl + "query/",
@@ -97,7 +97,7 @@ chrome.browserAction.onClicked.addListener(function() {
       },
       data: JSON.stringify({ q: query, lang: "en" }),
       success: function(data) {
-        return(JSON.stringify(data, undefined, 2));
+        
       },
       error: function() {
         return("Internal Server Error");
