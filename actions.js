@@ -1,5 +1,5 @@
 // for every action, excute some javascript
-var intents = ["scroll_up", "scroll_down", "new_tab", "go_back", "go_forward"];
+var intents = ["scroll_up", "scroll_down", "new_tab", "go_back", "go_forward", "click_link"];
 
 var scrollUp = function() {
 	console.log("I'm trying to scroll up");
@@ -26,13 +26,13 @@ var goForward = function() {
 	console.log("I'm trying to go forward");
 };
 
-var functions = [scrollUp, scrollDown, newTab, goBack, goForward];
+var functions = [scrollUp, scrollDown, newTab, goBack, goForward, clickLink];
 
 function selectIntent(data) {
 	console.log(data.result.action);
-  for (var i = 0; i < intents.length; i++) {
-    if (data.result.action == intents[i]) {
-    	functions[i]();
+  	for (var i = 0; i < intents.length; i++) {
+    	if (data.result.action == intents[i]) {
+    		functions[i]();
     }
     else if (intent == "click link")
       clickLink(params);
