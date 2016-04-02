@@ -36,9 +36,9 @@ var functions = [scrollUp, scrollDown, newTab, goBack, goForward];
 //
 function selectIntent(data) {
 	console.log(data.result.action);
-  for (var i = 0; i < intents.length; i++) {
-    if (data.result.action == intents[i]) {
-    	functions[i]();
+  	for (var i = 0; i < intents.length; i++) {
+    	if (data.result.action == intents[i]) {
+    		functions[i]();
     }
     else if (intent == "click link")
       clickLink(params);
