@@ -26,20 +26,16 @@
   var audio = new Audio('ding.mp3');
   var recognition = new webkitSpeechRecognition();
   if ('webkitSpeechRecognition' in window) {
-    recognition.continuous = true;
+    recognition.continuous = false;
     recognition.interimResults = true;
     recognition.lang = "en";
     var final_transcript = '';
     var interim_transcript = '';
     recognition.start();
+    var prevIndex = 0;
 
     recognition.onstart = function() {
       console.log('Starting Session!');
-    };
-
-    recognition.onaudiostart = function(event) {
-      console.log("First Audio Heard!");
-      start_timestamp = event.timeStamp;
     };
 
     recognition.onsoundstart = function() {
@@ -50,22 +46,30 @@
       console.log("Sound end");
     };
 
+
+    recognition.onaudiostart = function(event) {
+      console.log("First Audio Heard!");
+      start_timestamp = event.timeStamp;
+    };
+
+
     recognition.onresult = function (event) {
       var final = "";
       var interim = "";
+
       for (var i = 0; i < event.results.length; ++i) {
         if (event.results[i].isFinal) {
+          // log the latest phrase
           console.log(event.results[i][0].transcript);
 
-          // if(event.results[i][0].transcript == "Lucy"){
-          //   console.log("Lucy Was Called!");
-          //   audio.play();
-          // }
-
+          // check if program called
+          if(event.results[i][0].transcript == "Lucy"){
+            console.log("Lucy Was Called!");
+            audio.play();
+          }
           final += event.results[i][0].transcript;
         } else {
           interim += event.results[i][0].transcript;
-          console.log(interim);
         }
       }
 
@@ -73,9 +77,19 @@
       interim_span.innerHTML = interim;
     };
 
+    recognition.onspeechstart = function() {
+      console.log("Recognizable speech has started");
+    };
+
+    recognition.onspeechend = function() {
+      console.log("Recognizable speech has ended");
+    };
+
     recognition.onend = function() {
       console.log('Ending Session!');
-      console.log(final_transcript);
+      // console.log(final_transcript);
+      recognition.start();
+
     };
 
     recognition.onerror = function(event) {

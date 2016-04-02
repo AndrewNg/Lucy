@@ -22,56 +22,55 @@
   } else {
     alert('Sorry, the browser you are using doesn\'t support getUserMedia');
   }
-  
+
   var audio = new Audio('ding.mp3');
   var recognition = new webkitSpeechRecognition();
+  var lucyActivated = false;
   if ('webkitSpeechRecognition' in window) {
-    recognition.continuous = true;
+    recognition.continuous = false;
     recognition.interimResults = true;
     recognition.lang = "en";
     var final_transcript = '';
     var interim_transcript = '';
     recognition.start();
 
-    recognition.onstart = function() {
-      console.log('Starting Session!');
-    };
-
-    recognition.onaudiostart = function(event) {
-      console.log("First Audio Heard!");
+    recognition.onspeechstart = function(event) {
       start_timestamp = event.timeStamp;
-    };
-
-    recognition.onsoundstart = function() {
-      console.log("Sound start");
-    };
-
-    recognition.onsoundend = function() {
-      console.log("Sound end");
     };
 
     recognition.onresult = function (event) {
       var final = "";
       var interim = "";
+
       for (var i = 0; i < event.results.length; ++i) {
-        if (event.results[i].final) {
+        if (event.results[i].isFinal) {
+          // log the latest phrase
+          console.log(event.results[i][0].transcript);
+
+          if(lucyActivated){
+            console.log("lucy you got here");
+
+            lucyActivated = false;
+          }
+
+          // check if program called
+          if(event.results[i][0].transcript == "Lucy"){
+            console.log("Lucy Was Called!");
+            audio.play();
+            lucyActivated = true;
+          }
           final += event.results[i][0].transcript;
         } else {
-            // if (event.results[i][0].transcript == "Lucy"){
-            //   console.log("Lucy!!!");
-            //   audio.play();
-            // }
           interim += event.results[i][0].transcript;
         }
-      }
 
-      final_span.innerHTML = final;
-      interim_span.innerHTML = interim;
+        final_span.innerHTML = final;
+        interim_span.innerHTML = interim;
+      }
     };
 
     recognition.onend = function() {
-      console.log('Ending Session!');
-      console.log(final_transcript);
+      recognition.start();
     };
 
     recognition.onerror = function(event) {
@@ -88,8 +87,9 @@
           console.log('info_denied');
         }
       }
-    };
-  }
+    }; 
+  }  
+
 </script>
 </body>
 </html>
