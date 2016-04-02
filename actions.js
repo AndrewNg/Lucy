@@ -1,9 +1,4 @@
-
-
 // for every action, excute some javascript
-
-var intent = "";
-var params = "";
 var intents = ["scroll_up", "scroll_down", "new_tab", "go_back", "go_forward"];
 
 var scrollUp = function() {
@@ -33,7 +28,6 @@ var goForward = function() {
 
 var functions = [scrollUp, scrollDown, newTab, goBack, goForward];
 
-//
 function selectIntent(data) {
 	console.log(data.result.action);
   for (var i = 0; i < intents.length; i++) {
