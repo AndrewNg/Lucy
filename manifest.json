@@ -9,12 +9,14 @@
 
   "background": {
     "background_page": ["background.html"],
-    "scripts": ["background.js"]
+    "scripts": ["jquery-1.9.1.min.js", "background.js", "actions.js"]
   },
 
   "browser_action": {
     "default_icon": "icon.png"
     },
+
+  "options_page": "initialize.html",
 
   "content_scripts": [
   {
