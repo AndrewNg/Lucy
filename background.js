@@ -97,7 +97,7 @@ chrome.browserAction.onClicked.addListener(function() {
       },
       data: JSON.stringify({ q: query, lang: "en" }),
       success: function(data) {
-        
+        selectIntent(data);
       },
       error: function() {
         return("Internal Server Error");
