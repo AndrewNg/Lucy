@@ -1,1 +1,1 @@
-Your friendly AI broker.
+Browse the web hands-free.
