@@ -18,6 +18,7 @@ chrome.browserAction.onClicked.addListener(function() {
   var audio = new Audio('ding.mp3');
   var recognition = new webkitSpeechRecognition();
   var lucyActivated = false;
+  var lucyTimer;
   if ('webkitSpeechRecognition' in window) {
     recognition.continuous = false;
     recognition.interimResults = true;
@@ -41,15 +42,14 @@ chrome.browserAction.onClicked.addListener(function() {
           console.log(event.results[i][0].transcript);
 
           if(lucyActivated){
+            clearTimeout(lucyTimer);
+            lucyTimer = setTimeout(function(){ lucyActivated = false;}, 6000);
             intent = getIntent(event.results[i][0].transcript);
-            lucyActivated = false;
-          }
-
-          // check if program called
-          if(event.results[i][0].transcript == "Lucy"){
+          } else if(event.results[i][0].transcript == "Lucy"){
             console.log("Lucy Was Called!");
             audio.play();
             lucyActivated = true;
+            lucyTimer = setTimeout(function(){ lucyActivated = false;}, 6000);
           }
           final += event.results[i][0].transcript;
         } else {
@@ -110,6 +110,4 @@ chrome.browserAction.onClicked.addListener(function() {
       }
     });
   }
-
-
 });
