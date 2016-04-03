@@ -10,7 +10,7 @@ chrome.runtime.onMessage.addListener(
 });
 
 // for every action, excute some javascript
-var intents = ["scroll_up", "scroll_down", "new_tab", "go_back", "go_forward", "click_link", "close_tab", "navigate", "look_up"];
+var intents = ["scroll_up", "scroll_down", "stop", "new_tab", "go_back", "go_forward", "click_link", "close_tab", "navigate", "look_up"];
 
 var scrollUp = function() {
   stop()
@@ -106,7 +106,7 @@ function openinnewtab(url) {
   win.focus();
 }
 
-var functions = [scrollUp, scrollDown, newTab, goBack, goForward, clickLink, closeTab, navigate, lookUp];
+var functions = [scrollUp, scrollDown, stop, newTab, goBack, goForward, clickLink, closeTab, navigate, lookUp];
 
 function selectIntent(data) {
   console.log(data.result.action);
