@@ -14,7 +14,7 @@ chrome.browserAction.onClicked.addListener(function() {
   } else {
     alert('Sorry, the browser you are using doesn\'t support getUserMedia');
   }
-  
+
   var audio = new Audio('ding.mp3');
   var recognition = new webkitSpeechRecognition();
   var lucyActivated = false;
@@ -76,7 +76,7 @@ chrome.browserAction.onClicked.addListener(function() {
           console.log('info_denied');
         }
       }
-    }; 
+    };
   }
 
   // extract an intent
@@ -97,7 +97,13 @@ chrome.browserAction.onClicked.addListener(function() {
       },
       data: JSON.stringify({ q: query, lang: "en" }),
       success: function(data) {
-        selectIntent(data);
+        chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+          chrome.tabs.sendMessage(tabs[0].id, {data:data}, function(response) {
+            if(response.type == "test"){
+              console.log('test received');
+            }
+          });
+        });
       },
       error: function() {
         return("Internal Server Error");
