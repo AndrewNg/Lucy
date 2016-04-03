@@ -43,13 +43,13 @@ chrome.browserAction.onClicked.addListener(function() {
 
           if(lucyActivated){
             clearTimeout(lucyTimer);
-            lucyTimer = setTimeout(function(){ lucyActivated = false;}, 6000);
+            lucyTimer = setTimeout(function(){ lucyActivated = false;}, 10000);
             intent = getIntent(event.results[i][0].transcript);
           } else if(event.results[i][0].transcript == "Lucy"){
             console.log("Lucy Was Called!");
             audio.play();
             lucyActivated = true;
-            lucyTimer = setTimeout(function(){ lucyActivated = false;}, 6000);
+            lucyTimer = setTimeout(function(){ lucyActivated = false;}, 10000);
           }
           final += event.results[i][0].transcript;
         } else {

@@ -89,12 +89,14 @@ var lookUp = function() {
       window.location.href = "http://google.com/search?q=" + data.result.parameters[term];
     }
     else {
-      if (data.result.resolvedQuery.indexOf("about") != -1)
-        window.location.href = "http://google.com/search?q=" + data.result.resolvedQuery.split("about")[1];
-      else if (data.result.resolvedQuery.indexOf("search") != -1)
-        window.location.href = "http://google.com/search?q=" + data.result.resolvedQuery.split("search")[1];
-      else if (data.result.resolvedQuery.indexOf("look up") != -1)
-        window.location.href = "http://google.com/search?q=" + data.result.resolvedQuery.split("look up")[1];
+      if (data.result.resolvedQuery.indexOf(" for ") != -1)
+        window.location.href = "http://google.com/search?q=" + data.result.resolvedQuery.split(" for ")[1];
+      else if (data.result.resolvedQuery.indexOf(" about ") != -1)
+        window.location.href = "http://google.com/search?q=" + data.result.resolvedQuery.split(" about ")[1];
+      else if (data.result.resolvedQuery.indexOf(" search ") != -1)
+        window.location.href = "http://google.com/search?q=" + data.result.resolvedQuery.split(" search ")[1];
+      else if (data.result.resolvedQuery.indexOf(" look up ") != -1)
+        window.location.href = "http://google.com/search?q=" + data.result.resolvedQuery.split(" look up ")[1];
       else
         console.log("sorry I couldn't hear that, could you say that again?");
     }
