@@ -21,7 +21,7 @@
   "content_scripts": [
   {
     "matches": ["http://*/*", "https://*/*"],
-    "js": ["jquery-1.9.1.min.js", "actions.js"]
+    "js": ["jquery-1.9.1.min.js", "actions.js", "parse.js"]
   }
   ],
 
