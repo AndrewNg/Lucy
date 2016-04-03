@@ -136,3 +136,38 @@ function intersect_safe(a, b)
 
   return result;
 }
+function getWebsite (phrase) {
+	var topdefault = ["google.com", "facebook.com", "youtube.com", "yahoo.com",
+					  "baidu.com", "live.com", "amazon.com", "qq.com", "twitter.com",
+					  "blogspot.com", "msn.com", "ebay.com", "wordpress.com",
+					  "vk.com", "microsoft.com", "tumblr.com", "pinterest.com",
+					  "babylon.com", "fc2.com", "paypal.com", "ask.com", "imdb.com",
+					  "soso.com", "sohu.com", "adobe.com", "go.com", "instagram.com",
+					  "flickr.com", "livedoor.com", "stackoverflow.com", "about.com",
+					  "cnn.com", "imgur.com", "alibaba.com", "netflix.com", "huffingtonpost.com",
+					  "espn.go.com", "weather.com", "bankofamerica.com" ];
+	var words = phrase.toLowerCase().split(" ");
+	var action = phrase.toLowerCase();
+	for (var i = 0; i < words.length; i++) {
+		for (var j = 0; j < topdefault.length; j++) {
+			if (topdefault[j].indexOf(words[i]) != -1) { 
+				action = topdefault[j];
+				return action; 
+			}
+		}
+	}
+	return action;
+}
+
+function openWebsite(phrase) {
+	var urlorphrase = getWebsite(phrase)
+	if (urlorphrase != phrase.toLowerCase()) {
+		var site = "http://" + urlorphrase
+		window.location.href = site;
+	}
+	else {
+		window.location.href = phrase;
+	}
+
+
+}
