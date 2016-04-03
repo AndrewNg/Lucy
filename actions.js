@@ -46,7 +46,7 @@ var navigate = function() {
   console.log("I'm trying to navigate to a site")
 };
 
-var functions = [scrollUp, scrollDown, newTab, goBack, goForward, clickLink];
+var functions = [scrollUp, scrollDown, newTab, goBack, goForward, clickLink, closeTab, navigate];
 
 function selectIntent(data) {
   console.log(data.result.action);
