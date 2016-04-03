@@ -9,7 +9,7 @@ function organizeArray(phrase) {
 		var templink = [];
 		var temptext = [];
 		$('a').each(function() {
-			if ($(this).text().indexOf(words[i]) != -1) {
+			if ($(this).text().toLowerCase().indexOf(words[i]) != -1) {
 				templink.push($(this).attr("href"));
 				temptext.push($(this).text());
 			}
@@ -30,12 +30,18 @@ function organizeArray(phrase) {
 
 	var twoArrays = [shortesttext, shortestlink];
 
+  console.log(twoArrays);
+
 	var simArray = []
 	for (var i = 0; i < shortesttext.length; i++) {
 		simArray.push(findSimilarity(shortesttext[i], phrase));
 	}
 
+  console.log(simArray);
+
 	var index = simArray.indexOf(Math.max.apply(Math, simArray));
+
+  console.log(index);
 
 	console.log(shortestlink[index]);
 
