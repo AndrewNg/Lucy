@@ -46,6 +46,11 @@ var navigate = function() {
   console.log("I'm trying to navigate to a site")
 };
 
+function openinnewtab(url) {
+  var win = window.open(url, '_blank');
+  win.focus();
+}
+
 var functions = [scrollUp, scrollDown, newTab, goBack, goForward, clickLink, closeTab, navigate];
 
 function selectIntent(data) {
