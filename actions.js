@@ -1,12 +1,15 @@
+var data;
+
 chrome.runtime.onMessage.addListener(
   function(request, sender, sendResponse) {
       console.log(request.data);
+      data = request.data;
       sendResponse({type: "test"});
       selectIntent(request.data);
 });
 
 // for every action, excute some javascript
-var intents = ["scroll_up", "scroll_down", "new_tab", "go_back", "go_forward", "click_link"];
+var intents = ["scroll_up", "scroll_down", "new_tab", "go_back", "go_forward", "click_link", "close_tab", "navigate"];
 
 var scrollUp = function() {
 	console.log("I'm trying to scroll up");
@@ -32,13 +35,16 @@ var goForward = function() {
 };
 
 var clickLink = function(params) {
-  console.log("I'm trying to scroll click link");
+  console.log("I'm trying to click link");
 };
 
-function openinnewtab(url) {
-  var win = window.open(url, '_blank');
-  win.focus();
-}
+var closeTab = function() {
+  console.log("I'm trying to close tab");
+};
+
+var navigate = function() {
+  console.log("I'm trying to navigate to a site")
+};
 
 var functions = [scrollUp, scrollDown, newTab, goBack, goForward, clickLink];
 
