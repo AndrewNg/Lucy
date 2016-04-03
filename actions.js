@@ -1,4 +1,5 @@
 var data;
+var timer;
 
 chrome.runtime.onMessage.addListener(
   function(request, sender, sendResponse) {
@@ -12,12 +13,20 @@ chrome.runtime.onMessage.addListener(
 var intents = ["scroll_up", "scroll_down", "new_tab", "go_back", "go_forward", "click_link", "close_tab", "navigate", "look_up"];
 
 var scrollUp = function() {
+  stop()
 	console.log("I'm trying to scroll up");
+  timer = setInterval(function() {window.scrollBy(0, -1)}, 8);
 };
 
 var scrollDown = function() {
+  stop()
 	console.log("I'm trying to scroll down");
+  timer = setInterval(function() {window.scrollBy(0, 1)}, 8);
 };
+
+var stop = function() {
+  clearInterval(timer);
+}
 
 var newTab = function() {
 	console.log("I'm trying to scroll new tab");

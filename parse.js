@@ -148,7 +148,7 @@ function getWebsite (phrase) {
 					  "vk.com", "microsoft.com", "tumblr.com", "pinterest.com",
 					  "babylon.com", "fc2.com", "paypal.com", "ask.com", "imdb.com",
 					  "soso.com", "sohu.com", "adobe.com", "go.com", "instagram.com",
-					  "flickr.com", "livedoor.com", "stackoverflow.com", "about.com",
+					  "flickr.com", "livedoor.com", "stackoverflow.com",
 					  "cnn.com", "imgur.com", "alibaba.com", "netflix.com", "huffingtonpost.com",
 					  "espn.go.com", "weather.com", "bankofamerica.com", "nytimes.com" ];
 	var words = phrase.toLowerCase().split(" ");
