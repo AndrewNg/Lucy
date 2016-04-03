@@ -37,10 +37,9 @@ function organizeArray(phrase) {
 
 	var index = simArray.indexOf(Math.max.apply(Math, simArray));
 
+	console.log(shortestlink[index]);
 
-	console.log(linkarray[index]);
-
-	// window.location.href = shortestlink[index];
+	window.location.href = shortestlink[index];
 
 	return shortestlink[index];
 }
@@ -145,14 +144,15 @@ function getWebsite (phrase) {
 					  "soso.com", "sohu.com", "adobe.com", "go.com", "instagram.com",
 					  "flickr.com", "livedoor.com", "stackoverflow.com", "about.com",
 					  "cnn.com", "imgur.com", "alibaba.com", "netflix.com", "huffingtonpost.com",
-					  "espn.go.com", "weather.com", "bankofamerica.com" ];
+					  "espn.go.com", "weather.com", "bankofamerica.com", "nytimes.com" ];
 	var words = phrase.toLowerCase().split(" ");
-	var action = phrase.toLowerCase();
+	var action = [phrase.toLowerCase(), false];
 	for (var i = 0; i < words.length; i++) {
 		for (var j = 0; j < topdefault.length; j++) {
-			if (topdefault[j].indexOf(words[i]) != -1) { 
-				action = topdefault[j];
-				return action; 
+			if (topdefault[j].indexOf(words[i]) != -1) {
+				action[0] = topdefault[j];
+        action[1] = true;
+				return action;
 			}
 		}
 	}
@@ -160,14 +160,16 @@ function getWebsite (phrase) {
 }
 
 function openWebsite(phrase) {
-	var urlorphrase = getWebsite(phrase)
-	if (urlorphrase != phrase.toLowerCase()) {
-		var site = "http://" + urlorphrase
+  console.log(phrase);
+	var urlArray = getWebsite(phrase);
+  console.log(urlArray);
+	if (urlArray[1]) {
+    console.log("navigating to site");
+		var site = "http://www." + urlArray[0];
 		window.location.href = site;
 	}
 	else {
-		window.location.href = phrase;
+    console.log("searching in google");
+		window.location.href = "http://google.com/search?q=" + phrase;
 	}
-
-
 }
