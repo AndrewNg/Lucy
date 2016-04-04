@@ -3,24 +3,24 @@ var timer;
 
 chrome.runtime.onMessage.addListener(
   function(request, sender, sendResponse) {
-      console.log(request.data);
-      data = request.data;
-      sendResponse({type: "test"});
-      selectIntent(request.data);
-});
+    console.log(request.data);
+    data = request.data;
+    sendResponse({type: "test"});
+    selectIntent(request.data);
+  });
 
 // for every action, excute some javascript
 var intents = ["scroll_up", "scroll_down", "stop", "new_tab", "go_back", "go_forward", "click_link", "close_tab", "navigate", "look_up"];
 
 var scrollUp = function() {
-  stop()
-	console.log("I'm trying to scroll up");
+  stop();
+  console.log("I'm trying to scroll up");
   timer = setInterval(function() {window.scrollBy(0, -1)}, 8);
 };
 
 var scrollDown = function() {
-  stop()
-	console.log("I'm trying to scroll down");
+  stop();
+  console.log("I'm trying to scroll down");
   timer = setInterval(function() {window.scrollBy(0, 1)}, 8);
 };
 
