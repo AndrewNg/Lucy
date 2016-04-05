@@ -1,5 +1,10 @@
 var data;
 var timer;
+var synth = window.speechSynthesis;
+var utterThis = new SpeechSynthesisUtterance("Sorry, I don't understand that request.");
+// var speech_voices;
+// voices = synth.getVoices();
+// speech.voice = voices.filter(function(voice) { return voice.name == 'Google UK English Female'; })[0];
 
 chrome.runtime.onMessage.addListener(
   function(request, sender, sendResponse) {
@@ -7,7 +12,8 @@ chrome.runtime.onMessage.addListener(
     data = request.data;
     sendResponse({type: "test"});
     selectIntent(request.data);
-  });
+  }
+);
 
 // for every action, excute some javascript
 var intents = ["scroll_up", "scroll_down", "stop", "new_tab", "go_back", "go_forward", "click_link", "close_tab", "navigate", "look_up"];
@@ -111,10 +117,14 @@ function openinnewtab(url) {
 var functions = [scrollUp, scrollDown, stop, newTab, goBack, goForward, clickLink, closeTab, navigate, lookUp];
 
 function selectIntent(data) {
+  var foundFunction = false;
   console.log(data.result.action);
   for (var i = 0; i < intents.length; i++) {
     if (data.result.action == intents[i]) {
+      foundFunction = true;
       functions[i]();
     }
   }
+  if (foundFunction == false)
+    synth.speak(utterThis);
 }

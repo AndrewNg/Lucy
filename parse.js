@@ -141,28 +141,31 @@ function intersect(a, b) {
 
    return result;
  }
- function getWebsite (phrase) {
-   var topdefault = ["google.com", "facebook.com", "youtube.com", "yahoo.com",
-   "baidu.com", "live.com", "amazon.com", "qq.com", "twitter.com",
-   "blogspot.com", "msn.com", "ebay.com", "wordpress.com",
-   "vk.com", "microsoft.com", "tumblr.com", "pinterest.com",
-   "babylon.com", "fc2.com", "paypal.com", "ask.com", "imdb.com",
-   "soso.com", "sohu.com", "adobe.com", "go.com", "instagram.com",
-   "flickr.com", "livedoor.com", "stackoverflow.com",
-   "cnn.com", "imgur.com", "alibaba.com", "netflix.com", "huffingtonpost.com",
-   "espn.go.com", "weather.com", "bankofamerica.com", "nytimes.com" ];
-   var words = phrase.toLowerCase().split(" ");
-   var action = [phrase.toLowerCase(), false];
-   for (var i = 0; i < words.length; i++) {
+function getWebsite (phrase) {
+  if (phrase.indexOf(".com") != -1 || phrase.indexOf(".edu") != -1 || phrase.indexOf(".org") != -1 )
+    return [phrase, true];
+
+  var topdefault = ["google.com", "facebook.com", "youtube.com", "yahoo.com",
+  "baidu.com", "live.com", "amazon.com", "qq.com", "twitter.com",
+  "blogspot.com", "msn.com", "ebay.com", "wordpress.com",
+  "vk.com", "microsoft.com", "tumblr.com", "pinterest.com",
+  "babylon.com", "fc2.com", "paypal.com", "ask.com", "imdb.com",
+  "soso.com", "sohu.com", "adobe.com", "go.com", "instagram.com",
+  "flickr.com", "livedoor.com", "stackoverflow.com",
+  "cnn.com", "imgur.com", "alibaba.com", "netflix.com", "huffingtonpost.com",
+  "espn.go.com", "weather.com", "bankofamerica.com", "nytimes.com" ];
+  var words = phrase.toLowerCase().split(" ");
+  var action = [phrase.toLowerCase(), false];
+  for (var i = 0; i < words.length; i++) {
     for (var j = 0; j < topdefault.length; j++) {
-     if (topdefault[j].indexOf(words[i]) != -1) {
-      action[0] = topdefault[j];
-      action[1] = true;
-      return action;
+      if (topdefault[j].indexOf(words[i]) != -1) {
+        action[0] = topdefault[j];
+        action[1] = true;
+        return action;
+      }
     }
   }
-}
-return action;
+  return action;
 }
 
 function openWebsite(phrase) {
@@ -171,7 +174,7 @@ function openWebsite(phrase) {
   console.log(urlArray);
   if (urlArray[1]) {
     console.log("navigating to site");
-    var site = "http://www." + urlArray[0];
+    var site = "http://" + urlArray[0];
     window.location.href = site;
   }
   else {

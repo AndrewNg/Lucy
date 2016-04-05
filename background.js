@@ -16,6 +16,8 @@ chrome.browserAction.onClicked.addListener(function() {
   }
 
   var audio = new Audio('ding.mp3');
+  var end = new Audio('woosh.mp3');
+  var toggle = false;
   var recognition = new webkitSpeechRecognition();
   var lucyActivated = false;
   var lucyTimer;
@@ -49,6 +51,7 @@ chrome.browserAction.onClicked.addListener(function() {
             console.log("Lucy Was Called!");
             audio.play();
             lucyActivated = true;
+            toggle = true;
             lucyTimer = setTimeout(function(){ lucyActivated = false;}, 10000);
           }
           final += event.results[i][0].transcript;
@@ -65,6 +68,10 @@ chrome.browserAction.onClicked.addListener(function() {
     recognition.onerror = function(event) {
       if (event.error == 'no-speech') {
         console.log('info_no_speech');
+        if (lucyActivated && toggle) {
+          toggle = false;
+          end.play();
+        }
       }
       if (event.error == 'audio-capture') {
         console.log('info_no_microphone');
