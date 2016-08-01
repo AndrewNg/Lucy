@@ -1,16 +1,34 @@
 <html>
-  <head>
-    <script type="text/javascript" src="jquery-1.9.1.min.js"></script>
-    <script type = "text/javascript" src = "initialize.js"></script>
-  </head>
+<head>
+	<script type="text/javascript" src="jquery-3.1.0.min.js"></script>
+	<script type = "text/javascript" src = "initialize.js"></script>
+	<style>
+		#info_blocked {
+			display: none;
+		}
+		#prevPageRedirectButton {
+			display: none;
+		}
+		.centered {
+		  position: fixed;
+		  top: 50%;
+		  left: 50%;
+		  /* bring your own prefixes */
+		  transform: translate(-50%, -50%);
+		}
+	</style>
+</head>
 
-  <style>
-/*  	#button {
-  		visibility: false;
-  	}*/
-  </style>
 <body>
-	<button id="microphone"></button>
+	<div class="centered">
+		<h1>Welcome to Lucy!</h1>
+		<div id="info_blocked">
+			<p>Permission to use microphone is blocked. To change: </p>
+			<ul>
+				<li>In the address bar, click on camera icon and select the "Always allow..." option.</li>
+				<li>Either refresh the page or click the Lucy icon to be redirected.</li>
+			</ul>
+		</div>
+	</div>
 </body>
-
 </html>
