@@ -2,28 +2,21 @@
   "manifest_version": 2,
 
   "name": "Lucy",
-  "description": "This extension lets you browse the web hands-free",
-  "version": "1.0",
-
-  "permissions": ["tabs", "identity", "webNavigation", "bookmarks", "downloads", "sessions"],
-
-  "background": {
-    "background_page": ["background.html"],
-    "scripts": ["jquery-1.9.1.min.js", "background.js"]
-  },
-
-  "browser_action": {
-    "default_icon": "icon.png"
-    },
-
+  "description": "Browse the web hands free",
+  "version": "0.1",
+  "author": "Rohan Doshi",
+  "permissions": ["tabs", "identity", "webNavigation", "bookmarks", "downloads", "sessions", "contextMenus"],
   "options_page": "initialize.html",
-
+  "background" : {
+    "scripts": ["jquery-3.1.0.min.js", "background.js"]
+  },
+  "browser_action": {
+    "default_icon": "mic-slash.png"
+  },
   "content_scripts": [
   {
     "matches": ["http://*/*", "https://*/*"],
-    "js": ["jquery-1.9.1.min.js", "actions.js", "parse.js"]
+    "js": ["jquery-3.1.0.min.js", "actions.js", "parse.js"]
   }
-  ],
-
-  "options_page": "initialize.html"
+  ]
 }
