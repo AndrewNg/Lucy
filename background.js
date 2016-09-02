@@ -176,20 +176,22 @@ function isOkayLucyCalled(latestString) {
 
 // Given that "Okay Lucy" has been called, start listening for query
 function startListeningForQuery() {
-    // Okay Lucy has been called!
-    isListeningForQueryActivated = true;
-
     // trigger audio since Lucy called
     var beepOn = new Audio('beep_short_on.wav');
     beepOn.play();
 
     // start animating Lucy icon to indiate
     keepAnimatingLucyIcon = true;
-    animateLucyIcon();
+    if (!isListeningForQueryActivated){
+        animateLucyIcon();        
+    }
 
     // after 6 seconds, lucy will be deactivated unless a user says a query
     clearTimeout(timeSinceLucyActivatedTimer);
     timeSinceLucyActivatedTimer = setTimeout(stopListeningForQuery, 6000);
+
+    // Okay Lucy has been called!
+    isListeningForQueryActivated = true;
 }
 
 // animate the Lucy icon frame by frame
@@ -280,7 +282,7 @@ function getIntent(query) {
         success: function(data) {
             console.log(data);
 
-
+            // verbally notify the user if the intent is invalid
             if (data.result.action == undefined) {
                     chrome.tts.getVoices(function(voices) {
                       chrome.tts.speak("Sorry, I don't understand that request.", {'voiceName': 'Google UK English Female'});
