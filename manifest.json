@@ -5,7 +5,7 @@
   "description": "Browse the web hands free",
   "version": "0.1",
   "author": "Rohan Doshi",
-  "permissions": ["tabs", "identity", "webNavigation", "bookmarks", "downloads", "sessions", "contextMenus"],
+  "permissions": ["tabs", "identity", "webNavigation", "bookmarks", "downloads", "sessions", "contextMenus", "tts"],
   "options_page": "initialize.html",
   "background" : {
     "scripts": ["jquery-3.1.0.min.js", "background.js"]

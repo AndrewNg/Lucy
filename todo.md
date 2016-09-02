@@ -1,5 +1,4 @@
 # Bugs that we know of
-* Saying "google x" doesn't google it
 * Lucy doesn't work out of the box (i.e, on the extension page or a regular new tab page. You have to go to a site first.)
 * Closing a tab only works with tabs created after Lucy has been initialized
 * Commands only work on pages where JavaScript is enabled
