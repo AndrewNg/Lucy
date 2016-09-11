@@ -15,8 +15,8 @@ chrome.runtime.onMessage.addListener(
 
         // ensure the intent is on the predefined list
         selectIntent(data);
-
-        // // give a success callback - never used
+        
+        // give a success callback - never used
         sendResponse({
             type: "success"
         });
@@ -29,18 +29,12 @@ function selectIntent(data) {
     var intents = ["scroll_up", "scroll_down", "stop", "new_tab", "go_back", "go_forward", "click_link", "close_tab", "navigate", "look_up"];
     var functions = [scrollUp, scrollDown, stop, newTab, goBack, goForward, clickLink, closeTab, navigate, lookUp];
 
-    var foundLucyFunction = false;
     console.log(data.result.action);
     for (var i = 0; i < intents.length; i++) {
         if (data.result.action == intents[i]) {
-            foundLucyFunction = true;
             functions[i]();
+            break;
         }
-    }
-
-    // if query doesn't have one of the predefined intents, issue a verbal warning
-    if (!foundLucyFunction) {
-        speak("Sorry, I don't understand that request.");
     }
 }
 
@@ -147,16 +141,6 @@ function lookUp() {
     }
 }
 
-// text-to-voice using the SpeechSynthesis library
-function speak(phrase) {
-    // create new Utterance
-    var utterance = new SpeechSynthesisUtterance(phrase);
 
-    // change the voice to UK English Female
-    var voices = window.speechSynthesis.getVoices();
-    utterance.voice = voices.filter(function(voice) { return voice.name == 'Google UK English Female'; })[0];
 
-    // speak the voice outloud
-    window.speechSynthesis.speak(utterance);
-}
 

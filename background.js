@@ -64,19 +64,25 @@ if ('webkitSpeechRecognition' in window) {
                     var latestString = event.results[i][0].transcript;
                     console.log(latestString);
 
+                    // this prevents Lucy from listening to it's own verbal warnings
+                    if (latestString == "sorry I don't understand that request") {
+                        break;
+                    }
+
                     // check if latest string includes call to "Okay Lucy"
                     if (isOkayLucyCalled(latestString)) {
                         startListeningForQuery();
                     } else if (isListeningForQueryActivated) { // if listening for query
-                        // listen for new queries without "Hello Lucy" prompt for 10 seconds
+                        // listen for new queries without "Hello Lucy" prompt for 9 seconds
                         clearTimeout(timeSinceLucyActivatedTimer);
-                        timeSinceLucyActivatedTimer = setTimeout(stopListeningForQuery, 10000);
+                        timeSinceLucyActivatedTimer = setTimeout(stopListeningForQuery, 9000);
 
                         // if a non-null string exists for the query, get the intent
                         if (latestString) {
                             getIntent(latestString)
                         }
                     } 
+                    break;
                 }
             }
         }
@@ -170,20 +176,22 @@ function isOkayLucyCalled(latestString) {
 
 // Given that "Okay Lucy" has been called, start listening for query
 function startListeningForQuery() {
-    // Okay Lucy has been called!
-    isListeningForQueryActivated = true;
-
     // trigger audio since Lucy called
     var beepOn = new Audio('beep_short_on.wav');
     beepOn.play();
 
     // start animating Lucy icon to indiate
     keepAnimatingLucyIcon = true;
-    animateLucyIcon();
+    if (!isListeningForQueryActivated){
+        animateLucyIcon();        
+    }
 
     // after 6 seconds, lucy will be deactivated unless a user says a query
     clearTimeout(timeSinceLucyActivatedTimer);
     timeSinceLucyActivatedTimer = setTimeout(stopListeningForQuery, 6000);
+
+    // Okay Lucy has been called!
+    isListeningForQueryActivated = true;
 }
 
 // animate the Lucy icon frame by frame
@@ -253,8 +261,8 @@ function stopVoiceToText() {
 // call API.AI to get the intent of the query
 function getIntent(query) {
     // API.AI request variables - UPDATE 
-    var accessToken = "cfa415db33e24195927987711addac1c";
-    var subscriptionKey = "d0426b7da80d43b49c635e746ebd80df";
+    var accessToken = "d4213164d0e248f5a19a5cbeac6e2c53";
+    var subscriptionKey = "95274760f9e74fd29c6d8ed6c842ac99";
     var baseUrl = "https://api.api.ai/v1/";
 
     // asynchronously query the API.AI api server
@@ -273,8 +281,13 @@ function getIntent(query) {
         // execute functions in action.js depending on the intent
         success: function(data) {
             console.log(data);
-            // act if an intent returned
-            if (data.result.action) {
+
+            // verbally notify the user if the intent is invalid
+            if (data.result.action == undefined) {
+                    chrome.tts.getVoices(function(voices) {
+                      chrome.tts.speak("Sorry, I don't understand that request.", {'voiceName': 'Google UK English Female'});
+                    });
+            } else {
                 // get the active tab's ID
                 chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
                     // inject the active tab with the content script (actions.js),
